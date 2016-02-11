@@ -24,10 +24,22 @@ def get_req
 end
 
 def post_req
-	@client.puts "#{@method} #{@path} #{@vers}"
-
+	f = File.open("thanks.html")
+	@params = {}
+	@params  = JSON.parse(@path)
+	@client.puts "#{@params}"
+	replace = " <li>Vikings Name: #{@params["viking"]["name"]}</li>\n" +
+			  " <li>Vikings Email: #{@params["viking"]["email"]}</li>"
+	
+	@client.puts "#{f.read.gsub("<%= yield %>", replace)}"
 
 end
+
+
+
+
+
+
 
 def handler
 	if @method == "GET"
